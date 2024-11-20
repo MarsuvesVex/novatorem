@@ -8,6 +8,8 @@ from colorthief import ColorThief
 from base64 import b64encode
 from dotenv import load_dotenv, find_dotenv
 from flask import Flask, Response, render_template, request
+from flask import Blueprint, jsonify
+from .config import Config
 
 load_dotenv(find_dotenv())
 

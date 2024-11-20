@@ -7,7 +7,8 @@ import requests
 import json
 import random
 
-spotify_bp = Blueprint('spotify', __name__, template_folder='templates')
+""" spotify_bp = Blueprint('spotify', __name__, template_folder='templates') """
+spotify_bp = Blueprint('spotify', __name__)
 
 class SpotifyAPI:
     def __init__(self):

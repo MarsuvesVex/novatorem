@@ -1,8 +1,6 @@
-# api/youtube_routes.py
-from flask import Blueprint, jsonify, render_template, request, Flask
+from flask import Blueprint, jsonify, render_template, request
 from .config import Config
 import requests
-import os
 
 youtube_bp = Blueprint('youtube', __name__, template_folder='templates')
 
@@ -26,6 +24,7 @@ def get_recent_videos(channel_id):
         response = requests.get(Config.YOUTUBE_BASE_URL, params=params)
         response.raise_for_status()
         data = response.json()
+
         videos = [
             {
                 "videoId": item["id"]["videoId"],
@@ -46,5 +45,6 @@ def get_recent_videos(channel_id):
                 border_color=border_color
             )
         return jsonify({"videos": videos})
+
     except requests.exceptions.RequestException as e:
         return jsonify({"error": f"Failed to fetch data from YouTube API: {str(e)}"}), 500
