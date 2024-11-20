@@ -3,6 +3,7 @@
 from flask import Blueprint, jsonify
 from api.config import Config
 import requests
+from dotenv import load_dotenv, find_dotenv
 
 youtube_bp = Blueprint('youtube', __name__)
 
