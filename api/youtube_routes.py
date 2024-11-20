@@ -1,7 +1,8 @@
 # api/youtube_routes.py
-from flask import Blueprint, jsonify, render_template, request
+from flask import Blueprint, jsonify, render_template, request, Flask
 from .config import Config
 import requests
+import os
 
 youtube_bp = Blueprint('youtube', __name__, template_folder='templates')
 
