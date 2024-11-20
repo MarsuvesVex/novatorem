@@ -9,6 +9,8 @@ def get_recent_videos(channel_id):
     """Fetch and display recent videos from a YouTube channel"""
     background_color = request.args.get('background_color', '#181414')
     border_color = request.args.get('border_color', '#282828')
+    # Get the value of 'rendered' from the query string
+    rendered = request.args.get('rendered', 'false').lower() == 'true'
 
     params = {
         "key": Config.YOUTUBE_API_KEY,
@@ -36,12 +38,15 @@ def get_recent_videos(channel_id):
             if item["id"].get("videoId")
         ]
 
-        return render_template(
-            'youtube.html.j2',
-            videos=videos,
-            background_color=background_color,
-            border_color=border_color
-        )
+        if rendered:
+            return render_template(
+                'youtube.html.j2',
+                videos=videos,
+                background_color=background_color,
+                border_color=border_color
+            )
+
+        return jsonify({"videos": videos})
 
     except requests.exceptions.RequestException as e:
         return jsonify({"error": f"Failed to fetch data from YouTube API: {str(e)}"}), 500
