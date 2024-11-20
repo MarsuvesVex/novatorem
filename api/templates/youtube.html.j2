@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            background: {{ background_color }};
+            }
+
+            .video-card {
+            background: #282828;
+            border-radius: 8px;
+            overflow: hidden;
+            }
+
+            .thumbnail {
+            width: 100%;
+            height: auto;
+            }
+
+            .video-info {
+            padding: 15px;
+            color: white;
+            }
+
+            .video-title {
+            font-size: 16px;
+            margin-bottom: 8px;
+            }
+
+            .channel-name {
+            color: #1DB954;
+            font-size: 14px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="video-grid"> {% for video in videos %} <div class="video-card">
+                <img class="thumbnail" src="{{ video.thumbnail }}" alt="{{ video.title }}" />
+                <div class="video-info">
+                    <div class="video-title">{{ video.title }}</div>
+                    <div class="channel-name">{{ video.channelTitle }}</div>
+                </div>
+            </div>
+            {% endfor %} </div>
+    </body>
+</html>
