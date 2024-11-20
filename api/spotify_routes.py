@@ -1,3 +1,4 @@
+
 # api/spotify_routes.py
 from flask import Blueprint, Response, render_template, request
 from .config import Config
@@ -5,10 +6,8 @@ from .utils import SpotifyUtils
 import requests
 import json
 import random
-from .spotify import  gradientGen, loadImageB64, getTemplate, get
 
 spotify_bp = Blueprint('spotify', __name__, template_folder='templates')
-
 
 class SpotifyAPI:
     def __init__(self):
@@ -63,68 +62,46 @@ def spotify_card(path):
     resp.headers["Cache-Control"] = "s-maxage=1"
     return resp
 
-def barGen(barCount):
-    barCSS = ""
-    left = 1
-    for i in range(1, barCount + 1):
-        anim = random.randint(500, 1000)
-        # below code generates random cubic-bezier values
-        x1 = random.random()
-        y1 = random.random()*2
-        x2 = random.random()
-        y2 = random.random()*2
-        barCSS += (
-            ".bar:nth-child({})  {{ left: {}px; animation-duration: 15s, {}ms; animation-timing-function: ease, cubic-bezier({},{},{},{}); }}".format(
-                i, left, anim, x1, y1, x2, y2
-            )
-        )
-        left += 4
-    return barCSS
-
-
 def make_spotify_svg(data, background_color, border_color):
-    barCount = 84
-    contentBar = "".join(["<div class='bar'></div>" for _ in range(barCount)])
-    barCSS = barGen(barCount)
+    bar_count = 84
+    content_bar = "".join(["<div class='bar'></div>" for _ in range(bar_count)])
+    bar_css = SpotifyUtils.bar_gen(bar_count)
 
     if not "is_playing" in data:
-        #contentBar = "" #Shows/Hides the EQ bar if no song is currently playing
-        currentStatus = "Recently played:"
-        recentPlays = get(RECENTLY_PLAYING_URL)
-        recentPlaysLength = len(recentPlays["items"])
-        itemIndex = random.randint(0, recentPlaysLength - 1)
-        item = recentPlays["items"][itemIndex]["track"]
+        current_status = "Recently played:"
+        recent_plays = spotify_api.get(Config.SPOTIFY_RECENTLY_PLAYING_URL)
+        recent_plays_length = len(recent_plays["items"])
+        item_index = random.randint(0, recent_plays_length - 1)
+        item = recent_plays["items"][item_index]["track"]
     else:
         item = data["item"]
-        currentStatus = "Vibing to:"
+        current_status = "Vibing to:"
 
-    if item["album"]["images"] == []:
-        image = PLACEHOLDER_IMAGE
-        barPalette = gradientGen(PLACEHOLDER_URL, 4)
-        songPalette = gradientGen(PLACEHOLDER_URL, 2)
-    else:
-        image = loadImageB64(item["album"]["images"][1]["url"])
-        barPalette = gradientGen(item["album"]["images"][1]["url"], 4)
-        songPalette = gradientGen(item["album"]["images"][1]["url"], 2)
+    if not item["album"]["images"]:
+        raise ValueError("No album art available")
 
-    artistName = item["artists"][0]["name"].replace("&", "&amp;")
-    songName = item["name"].replace("&", "&amp;")
-    songURI = item["external_urls"]["spotify"]
-    artistURI = item["artists"][0]["external_urls"]["spotify"]
+    image = SpotifyUtils.load_image_b64(item["album"]["images"][1]["url"])
+    bar_palette = SpotifyUtils.gradient_gen(item["album"]["images"][1]["url"], 4)
+    song_palette = SpotifyUtils.gradient_gen(item["album"]["images"][1]["url"], 2)
 
-    dataDict = {
-        "contentBar": contentBar,
-        "barCSS": barCSS,
-        "artistName": artistName,
-        "songName": songName,
-        "songURI": songURI,
-        "artistURI": artistURI,
+    artist_name = item["artists"][0]["name"].replace("&", "&amp;")
+    song_name = item["name"].replace("&", "&amp;")
+    song_uri = item["external_urls"]["spotify"]
+    artist_uri = item["artists"][0]["external_urls"]["spotify"]
+
+    data_dict = {
+        "content_bar": content_bar,
+        "bar_css": bar_css,
+        "artist_name": artist_name,
+        "song_name": song_name,
+        "song_uri": song_uri,
+        "artist_uri": artist_uri,
         "image": image,
-        "status": currentStatus,
+        "status": current_status,
         "background_color": background_color,
         "border_color": border_color,
-        "barPalette": barPalette,
-        "songPalette": songPalette
+        "bar_palette": bar_palette,
+        "song_palette": song_palette
     }
 
-    return render_template(getTemplate(), **dataDict)
+    return render_template('spotify.html.j2', **data_dict)

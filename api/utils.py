@@ -1,3 +1,5 @@
+
+# api/utils.py
 from base64 import b64encode
 import requests
 from io import BytesIO
@@ -16,9 +18,9 @@ class SpotifyUtils:
         for i in range(1, bar_count + 1):
             anim = random.randint(500, 1000)
             x1 = random.random()
-            y1 = random.random()*2
+            y1 = random.random() * 2
             x2 = random.random()
-            y2 = random.random()*2
+            y2 = random.random() * 2
             bar_css += (
                 ".bar:nth-child({})  {{ left: {}px; animation-duration: 15s, {}ms; "
                 "animation-timing-function: ease, cubic-bezier({},{},{},{}); }}"

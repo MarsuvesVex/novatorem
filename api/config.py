@@ -1,3 +1,5 @@
+
+# api/config.py
 import os
 from dotenv import load_dotenv, find_dotenv
 
@@ -8,10 +10,6 @@ class Config:
     SPOTIFY_CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID")
     SPOTIFY_SECRET_ID = os.getenv("SPOTIFY_SECRET_ID")
     SPOTIFY_REFRESH_TOKEN = os.getenv("SPOTIFY_REFRESH_TOKEN")
-    PLACEHOLDER_URL = "https://source.unsplash.com/random/300x300/?aerial"
-    FALLBACK_THEME = "spotify.html.j2"
-
-    # Spotify API endpoints
     SPOTIFY_REFRESH_TOKEN_URL = "https://accounts.spotify.com/api/token"
     SPOTIFY_NOW_PLAYING_URL = "https://api.spotify.com/v1/me/player/currently-playing"
     SPOTIFY_RECENTLY_PLAYING_URL = "https://api.spotify.com/v1/me/player/recently-played?limit=10"
