@@ -15,7 +15,7 @@ def get_recent_videos(channel_id):
         "channelId": channel_id,
         "part": "snippet",
         "order": "date",
-        "maxResults": 5,
+        "maxResults": 6,
         "type": "video"
     }
 
