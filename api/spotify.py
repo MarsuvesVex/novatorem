@@ -160,7 +160,7 @@ def makeSVG(data, background_color, border_color):
         "background_color": "rgba(0, 0, 0, 0)",
         "border_color": border_color,
         #"barPalette": barPalette,
-        "barPalette": "#6319e5",
+        "barPalette": "#630fb8",
         "songPalette": songPalette
     }
 
