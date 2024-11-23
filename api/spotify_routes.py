@@ -1,4 +1,3 @@
-
 # api/spotify_routes.py
 from flask import Blueprint, Response, render_template, request
 from .config import Config

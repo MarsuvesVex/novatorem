@@ -1,50 +1,61 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <style>
-            .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            padding: 20px;
-            background: {{ background_color }};
-            }
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <foreignObject width="800" height="600">
+        <div xmlns="http://www.w3.org/1999/xhtml" class="video-container">
+            <style>
+                .video-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                    gap: 20px;
+                    padding: 20px;
+                    background: {{ background_color }};
+                    border-radius: 10px;
+                }
 
-            .video-card {
-            background: #282828;
-            border-radius: 8px;
-            overflow: hidden;
-            }
+                .video-card {
+                    background: #282828;
+                    border-radius: 8px;
+                    overflow: hidden;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+                }
 
-            .thumbnail {
-            width: 100%;
-            height: auto;
-            }
+                .thumbnail {
+                    width: 100%;
+                    height: auto;
+                    display: block;
+                }
 
-            .video-info {
-            padding: 15px;
-            color: white;
-            }
+                .video-info {
+                    padding: 15px;
+                    color: white;
+                }
 
-            .video-title {
-            font-size: 16px;
-            margin-bottom: 8px;
-            }
+                .video-title {
+                    font-size: 16px;
+                    margin-bottom: 8px;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                }
 
-            .channel-name {
-            color: #1DB954;
-            font-size: 14px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="video-grid"> {% for video in videos %} <div class="video-card">
-                <img class="thumbnail" src="{{ video.thumbnail }}" alt="{{ video.title }}" />
-                <div class="video-info">
-                    <div class="video-title">{{ video.title }}</div>
-                    <div class="channel-name">{{ video.channelTitle }}</div>
+                .channel-name {
+                    color: #1DB954;
+                    font-size: 14px;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                }
+            </style>
+            <div class="video-grid">
+                {% for video in videos %}
+                <div class="video-card">
+                    <img class="thumbnail" src="{{ video.thumbnail }}" alt="{{ video.title }}" />
+                    <div class="video-info">
+                        <div class="video-title">{{ video.title }}</div>
+                        <div class="channel-name">{{ video.channelTitle }}</div>
+                    </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %} </div>
-    </body>
-</html>
+        </div>
+    </foreignObject>
+</svg>
