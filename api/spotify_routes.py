@@ -89,19 +89,35 @@ def make_spotify_svg(data, background_color, border_color):
     song_uri = item["external_urls"]["spotify"]
     artist_uri = item["artists"][0]["external_urls"]["spotify"]
 
+
     data_dict = {
-        "content_bar": content_bar,
-        "bar_css": bar_css,
-        "artist_name": artist_name,
-        "song_name": song_name,
-        "song_uri": song_uri,
-        "artist_uri": artist_uri,
+        "contentBar": content_bar,
+        "barCSS": bar_css,
+        "artistName": artist_name,
+        "songName": song_name,
+        "songURI": song_uri,
+        "artistURI": artist_uri,
         "image": image,
         "status": current_status,
         "background_color": background_color,
         "border_color": border_color,
-        "bar_palette": bar_palette,
-        "song_palette": song_palette
+        "barPalette": bar_palette,
+        "songPalette": song_palette
     }
+
+    """ data_dict = { """
+    """     "content_bar": content_bar, """
+    """     "bar_css": bar_css, """
+    """     "artist_name": artist_name, """
+    """     "song_name": song_name, """
+    """     "song_uri": song_uri, """
+    """     "artist_uri": artist_uri, """
+    """     "image": image, """
+    """     "status": current_status, """
+    """     "background_color": background_color, """
+    """     "border_color": border_color, """
+    """     "bar_palette": bar_palette, """
+    """     "song_palette": song_palette """
+    """ } """
 
     return render_template('spotify.html.j2', **data_dict)
